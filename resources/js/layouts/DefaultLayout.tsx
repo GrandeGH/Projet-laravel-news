@@ -11,7 +11,26 @@ export default function DefaultLayout({auth, children}: DefaultLayoutProps) {
     
     return(
         <>
-        <div>Test</div>
+        <div>
+            <nav className='bg-amber-300'>
+                {/* Lien */}
+                <NavigationMenuLink href='' className=''>
+                    Accueil
+                </NavigationMenuLink>
+                <NavigationMenuLink href='' className=''>
+                    Catégories
+                </NavigationMenuLink>
+                <NavigationMenuLink href='' className=''>
+                    Tag
+                </NavigationMenuLink>
+                <div className=''>
+                    <Link href='/login'>Connexion</Link>
+                    <Link href='/register'>Inscription</Link>
+                </div>
+            </nav>
+
+            <main>{children}</main>
+        </div>
         </>
     )
 }
