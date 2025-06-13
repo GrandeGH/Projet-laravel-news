@@ -20,6 +20,7 @@
                 $table->longText('content');
                 $table->string('image')->nullable();
                 $table->boolean('published')->default(false); //vrai si l'article est publié
+                $table->timestamp('published_at')->nullable(); // Date de publication réelle
                 $table->timestamps();
             });
         }
