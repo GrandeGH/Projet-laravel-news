@@ -34,6 +34,7 @@ class Article extends Model
         return $this->belongsTo(Categorie::class); // article appartient à catégorie
     }
 
+    // Many to Many
     public function tags() {
         return $this->hasMany(Tag::class); // article peut avoir plusieurs tags
     }
