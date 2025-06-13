@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role', //ajouter
     ];
 
     /**
@@ -44,5 +45,42 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+     // Relations (Un utilisateur peut posséder plusieurs articles, commentaires, likes)
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
+
+    public function commentaires()
+    {
+        return $this->hasMany(Commentaire::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    // Méthodes d'aide pour vérifier les rôles, très utiles pour les conditions et middleware
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isWebmaster()
+    {
+        return $this->role === 'webmaster';
+    }
+
+    public function isAuteur()
+    {
+        return $this->role === 'auteur';
+    }
+
+    public function isLecteur()
+    {
+        return $this->role === 'lecteur';
     }
 }
