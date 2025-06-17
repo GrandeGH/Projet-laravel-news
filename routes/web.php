@@ -1,6 +1,11 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\CommentaireController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\LikeController;
+
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
