@@ -14,7 +14,18 @@ Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
 
-Route::get('articles', [ArticleController::class, 'index'])->name('article');
+
+//Articles
+Route::get('articles', [ArticleController::class, 'index']);
+Route::get('/create/article', [ArticleController::class, 'create'])->middleware('auth');
+Route::post('/post/article', [ArticleController::class, 'store'])->middleware('auth');
+Route::get('/edit/article/{id}', [ArticleController::class, 'edit'])->middleware('auth');
+Route::put('/update/article/{id}', [ArticleController::class, 'update'])->middleware('auth');
+Route::delete('/delete/article/{id}', [ArticleController::class, 'destroy'])->middleware('auth');
+
+
+
+
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
