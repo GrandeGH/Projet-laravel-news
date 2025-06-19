@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categorie; // relation to many
 use App\Models\Article;
+use App\Models\Tag;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use Inertia\Inertia;
@@ -17,7 +18,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::with('categorie')->get();
+        $articles = Article::with('categorie', 'tags')->get();
         return Inertia::render(('Articles/ArticleIndex'),['articles' => $articles]);
     }
 
@@ -28,9 +29,11 @@ class ArticleController extends Controller
     {
         $articles = Article::all();
         $categories = Categorie::all(['id', 'name']);
+        $tags = Tag::all();
         return Inertia::render(('Admin/ArticlesAdmin/ArticleCreate'),[
             'articles' => $articles,
             'categories' => $categories, // envoie à la vue
+            'tags' => $tags,
         ]);
     }
 
@@ -48,11 +51,19 @@ class ArticleController extends Controller
             $article->image = $path;
         }
         $article->categorie_id = $request->categorie_id;
+
         $article->user_id = auth()->id();
         $article->published = $request->published ?? false;
         $article->published_at = $article->published ? now() : null;
 
         $article->save();
+
+        if ($request->has('tags')) {
+            // Vérifie que ce sont bien des tableaux d'ID valides
+            $article->tags()->sync($request->tags);
+            // `sync()` remplace les tags existants si l'article était édité
+
+        }
     }
 
     /**
@@ -60,7 +71,7 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        $article = Article::with('categorie')->find($id);
+        $article = Article::with('categorie', 'tags')->find($id);
         return Inertia::render(('Articles/ArticleShow'), ['article' => $article]);
     }
 

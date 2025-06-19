@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { router } from "@inertiajs/react";
 
-export default function CreateArticle( { categories }) {
+export default function CreateArticle( { categories, tags }) {
     const [values, setValues] = useState({
         title:"",
         slug:"", 
         content:"",   
         image: null,
         categorie_id: categories?.[0]?.id ?? 1, // Sélection par défaut
+        tags: [],
         published: false,
     });
 
@@ -21,6 +22,9 @@ export default function CreateArticle( { categories }) {
         formData.append('content', values.content);
         formData.append('published', values.published ? '1' : '0');
         formData.append('categorie_id', values.categorie_id.toString());
+        values.tags.forEach((tagId, index) => {
+            formData.append(`tags[${index}]`, tagId);
+        });
         if (values.image) {
             formData.append('image', values.image);
         }
@@ -109,6 +113,25 @@ export default function CreateArticle( { categories }) {
                                 </option>
                             ))}
                             </select>
+                    </div>
+                    <div>
+                        <label className="mb-4">Ajoutés les tags</label>
+                        {tags.map((tag) => (
+                            <label key={tag.id} className="flex items-center gap-1">
+                                <input 
+                                    type="checkbox" 
+                                    value={tag.id}
+                                    checked={values.tags.includes(tag.id)}
+                                    onChange={(e) => {
+                                        const newTags = e.target.checked
+                                            ? [...values.tags, tag.id]
+                                            : values.tags.filter((t) => t !== tag.id);
+                                        setValues({ ...values, tags: newTags });
+                                    }}
+                                />
+                                {tag.name}
+                            </label>
+                        ))}
                     </div>
 
                     {/* Publication */}

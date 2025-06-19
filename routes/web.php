@@ -19,6 +19,7 @@ Route::get('/', function () {
 Route::get('articles', [ArticleController::class, 'index']);
 Route::get('/create/article', [ArticleController::class, 'create'])->middleware('auth');
 Route::post('/post/article', [ArticleController::class, 'store'])->middleware('auth');
+Route::get('/detail/article/{id}', [ArticleController::class, 'show']);
 Route::get('/edit/article/{id}', [ArticleController::class, 'edit'])->middleware('auth');
 Route::put('/update/article/{id}', [ArticleController::class, 'update'])->middleware('auth');
 Route::delete('/delete/article/{id}', [ArticleController::class, 'destroy'])->middleware('auth');

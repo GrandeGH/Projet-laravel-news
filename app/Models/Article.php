@@ -36,7 +36,7 @@ class Article extends Model
 
     // Many to Many
     public function tags() {
-        return $this->hasMany(Tag::class); // article peut avoir plusieurs tags
+        return $this->belongsToMany(Tag::class); // plusieurs article peut avoir plusieurs tags // CORRIGER au lieu de hasMany
     }
 
     public function commentaires() {
