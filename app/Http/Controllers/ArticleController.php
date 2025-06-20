@@ -72,7 +72,7 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        $article = Article::with('categorie', 'tags', 'commentaires.user')->find($id);
+        $article = Article::with('categorie', 'tags', 'commentaires.user', 'likes')->find($id);
         return Inertia::render(('Articles/ArticleShow'), ['article' => $article]);
     }
 

@@ -42,9 +42,14 @@ class Article extends Model
     public function commentaires() {
         return $this->hasMany(Commentaire::class); // article peut avoir plusieurs commentaires
     }
+
+    //Likes
     public function likes() {
         return $this->hasMany(Like::class); // article peut avoir plusieurs likes
     }
+    public function isLikedBy($user) {
+    return $this->likes()->where('user_id', $user->id)->exists();
+    }   
 
     /** @use HasFactory<\Database\Factories\ArticleFactory> */
     use HasFactory;

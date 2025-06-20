@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Like;
+use App\Models\Article;
 use App\Http\Requests\StoreLikeRequest;
 use App\Http\Requests\UpdateLikeRequest;
+use Inertia\Inertia;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth; // <-- important
 
 class LikeController extends Controller
 {
@@ -27,9 +31,18 @@ class LikeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreLikeRequest $request)
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'article_id' => 'required|exists:articles,id',
+        ]);
+
+        $like = Like::firstOrCreate([
+            'user_id' => Auth::id(),
+            'article_id' => $request->article_id,
+        ]);
+
+        return back();
     }
 
     /**
@@ -59,8 +72,16 @@ class LikeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Like $like)
+    public function destroy(Request $request)
     {
-        //
+        $request->validate([
+            'article_id' => 'required|exists:articles,id',
+        ]);
+
+        Like::where('user_id', Auth::id())
+            ->where('article_id', $request->article_id)
+            ->delete();
+
+        return back();
     }
 }

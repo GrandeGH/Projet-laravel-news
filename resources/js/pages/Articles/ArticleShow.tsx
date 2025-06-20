@@ -6,7 +6,10 @@ import { useState } from "react"
 export default function ShowArticle({ article }) {
     const { auth } = usePage().props
     const [content, setContent] = useState("");
+    const hasLiked = article.likes.some(like => like.user_id === auth.user?.id); // like
 
+
+    // fonction commentaire
     const handleSubmit = (e) => {
         e.preventDefault();
         router.post("/commentaires", {
@@ -62,6 +65,31 @@ export default function ShowArticle({ article }) {
                 {/* Contenu */}
                 <div className="my-5 prose prose-invert leading-relaxed max-w-none text-base">{article.content}</div>               
                     
+                {/* ------ Bouton Like ---------- */}
+                {auth.user && (
+                    <form 
+                        onSubmit={(e) => {
+                            e.preventDefault();
+
+                            if (hasLiked) {
+                                router.post('/likes', {
+                                    article_id: article.id,
+                                    _method: 'DELETE'  // pour simuler un DELETE
+                                }, { preserveScroll: true });
+                            } else {
+                                router.post('/likes', {
+                                    article_id: article.id
+                                }, { preserveScroll: true });
+                            }
+                        }}
+                        className="mb-4"
+                    >
+                        <button className="text-sm text-blue-500 cursor-pointer">
+                            {hasLiked ? "💔 Retirer le like" : "❤️ Liker l'article"} ({article.likes.length})
+                        </button>
+                    </form>
+                )}
+
                 {/* Commentaires */}
                 <div>
                     <h2 className="text-2xl mb-3">Commentaire</h2>
@@ -85,6 +113,8 @@ export default function ShowArticle({ article }) {
                         <div key={com.id} className="border border-white rounded mb-2">
                             <p className="pt-3 ps-3"><strong>@{com.user?.name ?? "anonyme"}</strong></p>
                             <p className="p-3">{com.content}</p>
+
+                          
                         </div>
                     ))}
 

@@ -36,6 +36,9 @@ Route::delete('/delete/categorie/{id}', [CategorieController::class, 'destroy'])
 //Commentaire
 Route::post('/commentaires', [CommentaireController::class, 'store'])->middleware('auth');
 
+// Likes
+Route::post('/likes', [LikeController::class, 'store'])->middleware('auth');
+Route::delete('/likes', [LikeController::class, 'destroy'])->middleware('auth');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
