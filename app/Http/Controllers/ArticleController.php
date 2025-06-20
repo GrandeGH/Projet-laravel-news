@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categorie; // relation to many
 use App\Models\Article;
+use App\Models\Commentaire; 
 use App\Models\Tag;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
@@ -71,7 +72,7 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        $article = Article::with('categorie', 'tags')->find($id);
+        $article = Article::with('categorie', 'tags', 'commentaires.user')->find($id);
         return Inertia::render(('Articles/ArticleShow'), ['article' => $article]);
     }
 

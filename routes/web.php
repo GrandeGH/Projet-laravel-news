@@ -33,6 +33,10 @@ Route::get('/edit/categorie/{id}', [CategorieController::class, 'edit'])->middle
 Route::put('/update/categorie/{id}', [CategorieController::class, 'update'])->middleware('auth');
 Route::delete('/delete/categorie/{id}', [CategorieController::class, 'destroy'])->middleware('auth');
 
+//Commentaire
+Route::post('/commentaires', [CommentaireController::class, 'store'])->middleware('auth');
+
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');

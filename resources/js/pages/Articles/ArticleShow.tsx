@@ -1,9 +1,21 @@
 import Layout from "@/layouts/DefaultLayout2"
-import { usePage } from "@inertiajs/react"
+import { usePage, router } from "@inertiajs/react"
 import { Link } from "@inertiajs/react"
+import { useState } from "react"
 
 export default function ShowArticle({ article }) {
     const { auth } = usePage().props
+    const [content, setContent] = useState("");
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        router.post("/commentaires", {
+            article_id: article.id,
+            content,
+        }, {
+            onSuccess: () => setContent("")
+        });
+    }
 
     return(
         <Layout>
@@ -47,9 +59,40 @@ export default function ShowArticle({ article }) {
                     )}
                 </div>
                  
-                 {/* Contenu */}
-                <div className="mt-5 prose prose-invert leading-relaxed max-w-none text-base">{article.content}</div>               
+                {/* Contenu */}
+                <div className="my-5 prose prose-invert leading-relaxed max-w-none text-base">{article.content}</div>               
                     
+                {/* Commentaires */}
+                <div>
+                    <h2 className="text-2xl mb-3">Commentaire</h2>
+
+                    {auth.user && (
+                        <form onSubmit={handleSubmit}>
+                            <textarea 
+                            className="border w-full p-3 rounded-2xl"
+                            value={content}
+                            onChange={(e) => setContent(e.target.value)}
+                            placeholder="Laissez un commentaire ici..."
+                            ></textarea>
+
+                            <button className="cursor-pointer border border-white rounded-3xl p-2 mb-5">
+                                Envoyer
+                            </button>
+                        </form>
+                    )}          
+
+                    {article.commentaires.map((com) => (
+                        <div key={com.id} className="border border-white rounded mb-2">
+                            <p className="pt-3 ps-3"><strong>@{com.user?.name ?? "anonyme"}</strong></p>
+                            <p className="p-3">{com.content}</p>
+                        </div>
+                    ))}
+
+                
+                </div>
+
+
+
                 {/* Retour */}
                 <div className="mt-5">
                     <Link 

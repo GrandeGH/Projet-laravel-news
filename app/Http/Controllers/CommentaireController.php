@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Commentaire;
 use App\Http\Requests\StoreCommentaireRequest;
 use App\Http\Requests\UpdateCommentaireRequest;
+use Inertia\Inertia;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth; // <-- important
 
 class CommentaireController extends Controller
 {
@@ -27,9 +30,19 @@ class CommentaireController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCommentaireRequest $request)
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'article_id' => 'required|exists:articles,id',
+            'content' => 'required|string|max:1000',
+        ]);
+        Commentaire::create([
+            'user_id' => Auth::id(),
+            'article_id' => $request->article_id,
+            'content' => $request->content,
+        ]);
+
+        return back()->with('success', 'Commentaire ajouté avec succès.');
     }
 
     /**
