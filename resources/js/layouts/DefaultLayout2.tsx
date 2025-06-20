@@ -30,17 +30,29 @@ export default function Layout({children}: LayoutProps) {
 
     return(
         <>
-            <header className="bg-amber-50 text-black p-4 fixed top-0 w-screen">
+            <header className="bg-amber-50 text-black p-5 fixed top-0 w-screen">
                 <div className="flex justify-between">
-                    <div>Logo</div>
+                    <div>Tales Fandom</div>
                     {['admin', 'webmaster', 'auteur', 'lecteur'].includes(auth.user?.role) ? (
                         <p>Visible pour tous les rôles (Dashboard)</p>
                     ) : (
                         " "
                     )}
+                    <div className="flex gap-6">
+
+                            <Link href="/articles">
+                                Articles
+                            </Link>
+                            <Link href="/categories">
+                                Catégories
+                            </Link>
+                            <Link href="/tags">
+                                Tags
+                            </Link>
+                    </div>
 
                     {auth.user ? (
-                        <div>
+                        <div className="me-3">
                             <button onClick={deco} className="cursor-pointer">Deconnexion</button>
                         </div>
                     ) : (

@@ -24,9 +24,14 @@ Route::get('/edit/article/{id}', [ArticleController::class, 'edit'])->middleware
 Route::put('/update/article/{id}', [ArticleController::class, 'update'])->middleware('auth');
 Route::delete('/delete/article/{id}', [ArticleController::class, 'destroy'])->middleware('auth');
 
-
-
-
+//Catégories
+Route::get('categories', [CategorieController::class, 'index']);
+Route::get('cateogriesadmin', [CategorieController::class, 'indexadmin'])->middleware('auth');
+Route::get('/create/categorie', [CategorieController::class, 'create'])->middleware('auth');
+Route::post('/post/categorie', [CategorieController::class, 'store'])->middleware('auth');
+Route::get('/edit/categorie/{id}', [CategorieController::class, 'edit'])->middleware('auth');
+Route::put('/update/categorie/{id}', [CategorieController::class, 'update'])->middleware('auth');
+Route::delete('/delete/categorie/{id}', [CategorieController::class, 'destroy'])->middleware('auth');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {

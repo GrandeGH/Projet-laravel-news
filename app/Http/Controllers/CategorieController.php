@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Categorie;
 use App\Http\Requests\StoreCategorieRequest;
 use App\Http\Requests\UpdateCategorieRequest;
+use Inertia\Inertia;
+use Illuminate\Http\Request;
 
 class CategorieController extends Controller
 {
@@ -13,7 +15,14 @@ class CategorieController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Categorie::all();
+        return Inertia::render(('Categories/CategoriesIndex'));
+    }
+
+    public function indexadmin()
+    {
+        $categories = Categorie::all();
+        return Inertia::render(('CategoriesAdmin/CategoriesIndex'));
     }
 
     /**
@@ -21,13 +30,14 @@ class CategorieController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Categorie::all();
+        return Inertia::render(('CategoriesAdmin/CategoriesCreate'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCategorieRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -35,7 +45,7 @@ class CategorieController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Categorie $categorie)
+    public function show($id)
     {
         //
     }
@@ -43,7 +53,7 @@ class CategorieController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Categorie $categorie)
+    public function edit($id)
     {
         //
     }
@@ -51,7 +61,7 @@ class CategorieController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategorieRequest $request, Categorie $categorie)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -59,8 +69,9 @@ class CategorieController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Categorie $categorie)
+    public function destroy($id)
     {
-        //
+        $categorie = Categorie::find($id);
+        $categorie->delete();
     }
 }
