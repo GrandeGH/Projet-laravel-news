@@ -9,59 +9,49 @@ export default function ArticleIndex({articles}) {
         <Layout>
             <div className="p-4">
                 <h1 className="text-3xl font-bold mb-3">List des articles</h1>
-                {articles.length === 0 ? (
-                    <p>Aucun article disponible</p>
-                ) : (
-                    articles.map((article) => (
-                        <div className="border border-white m-3 p-3">
-                            <h2 className="text-2xl font-semibold">{article.title}</h2>
-                            {/* <p>Slug : {article.slug}</p> */}
-                            {/* <p>Categorie : {article.categorie?.name}</p> */}
-                            {/* <p><strong>Content</strong> : {article.content}</p> */}
-                            <div>
-                                {article.image && (
-                                    <img 
-                                        src={`/storage/${article.image}`} // important : ajoute /storage/ si l'image est stockée dans public/storage
-                                        alt={article.title}
-                                        className="w-full max-w-md rounded mt-2"
-                                    />
-                                )}
-                            </div>
-                                
-                            <div>
-                                {article.tags?.length > 0 ? (
-                                    article.tags.map(tag => (
-                                        <span 
-                                            key={tag.id}
-                                            className="border border-white rounded-3xl p-2 m-1">
-                                            {tag.name}
-                                        </span>
-                                    )) 
-                                 ) : (
-                                    <span>Aucun tag</span>
-                                )}
-                            </div>
+                <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                    {articles.length === 0 ? (
+                        <p>Aucun article disponible</p>
+                    ) : (
+                        articles.map((article) => (
+                            <div className="border border-white m-3 p-3">
+                                <h2 className="text-2xl font-semibold">{article.title}</h2>
+                                {/* <p>Slug : {article.slug}</p> */}
+                                {/* <p>Categorie : {article.categorie?.name}</p> */}
+                                {/* <p><strong>Content</strong> : {article.content}</p> */}
+                                <div>
+                                    {/* image */}
+                                    {article.image && (
+                                        <img 
+                                            src={`/storage/${article.image}`} // important : ajoute /storage/ si l'image est stockée dans public/storage
+                                            alt={article.title}
+                                            className="w-full max-w-md rounded mt-2 object-cover max-h-70 mb-3"
+                                        />
+                                    )}
+                                </div>
+                                    
 
-                            <Link href={`/detail/article/${article.id}`}>
-                                <button className="border border-white p-1 cursor-pointer">
-                                    Voir l'article
-                                </button>
-                            </Link>
-                            {/* Fonction role */}
-                            {['admin', 'webmaster', 'auteur'].includes(auth.user?.role) ? (
-                                
-                                <Link className="border border-white p-1 cursor-pointer" href={`/edit/article/${article.id}`}>
-                                    <button className="">
-                                        Modifier
+                                <Link href={`/detail/article/${article.id}`}>
+                                    <button className="border border-white p-1 cursor-pointer">
+                                        Voir l'article
                                     </button>
                                 </Link>
-                                
-                                ) : (
-                                    " "
-                                )}
-                        </div>
-                    ))
-                )}
+                                {/* Fonction role */}
+                                {['admin', 'webmaster', 'auteur'].includes(auth.user?.role) ? (
+                                    
+                                    <Link className="border border-white p-1 cursor-pointer" href={`/edit/article/${article.id}`}>
+                                        <button className="">
+                                            Modifier
+                                        </button>
+                                    </Link>
+                                    
+                                    ) : (
+                                        " "
+                                    )}
+                            </div>
+                        ))
+                    )}
+                </div>
             </div>
         </Layout>
     )

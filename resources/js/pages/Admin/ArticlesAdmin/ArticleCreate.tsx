@@ -7,7 +7,7 @@ export default function CreateArticle( { categories, tags }) {
         slug:"", 
         content:"",   
         image: null,
-        categorie_id: categories?.[0]?.id ?? 1, // Sélection par défaut
+        categorie_id: categories?.[0]?.id ?? 1, // Sélection par défaut // corriger
         tags: [],
         published: false,
     });
@@ -114,28 +114,30 @@ export default function CreateArticle( { categories, tags }) {
                             ))}
                             </select>
                     </div>
-                    <div>
+                    <div className="mb-5">
                         <label className="mb-4">Ajoutés les tags</label>
-                        {tags.map((tag) => (
-                            <label key={tag.id} className="flex items-center gap-1">
-                                <input 
-                                    type="checkbox" 
-                                    value={tag.id}
-                                    checked={values.tags.includes(tag.id)}
-                                    onChange={(e) => {
-                                        const newTags = e.target.checked
-                                            ? [...values.tags, tag.id]
-                                            : values.tags.filter((t) => t !== tag.id);
-                                        setValues({ ...values, tags: newTags });
-                                    }}
-                                />
-                                {tag.name}
-                            </label>
-                        ))}
+                        <div className="flex flex-wrap gap-2.5">
+                            {tags.map((tag) => (
+                                <label key={tag.id} className="flex items-center gap-1">
+                                    <input 
+                                        type="checkbox" 
+                                        value={tag.id}
+                                        checked={values.tags.includes(tag.id)}
+                                        onChange={(e) => {
+                                            const newTags = e.target.checked
+                                                ? [...values.tags, tag.id]
+                                                : values.tags.filter((t) => t !== tag.id);
+                                            setValues({ ...values, tags: newTags });
+                                        }}
+                                    />
+                                    {tag.name}
+                                </label>
+                            ))}
+                        </div>
                     </div>
 
                     {/* Publication */}
-                    <div className="flex flex-col">
+                    <div className="flex">
                         <label className="mb-2">Publié (ou en broullion si pas coché)</label>
                         <input 
                             name="published"

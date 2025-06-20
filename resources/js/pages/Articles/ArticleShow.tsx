@@ -24,6 +24,7 @@ export default function ShowArticle({ article }) {
                     {article.title}
                 </div>
 
+                {/* image */}
                 {article.image && (
                     <img 
                         src={`/storage/${article.image}`}

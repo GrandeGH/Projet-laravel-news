@@ -57,13 +57,13 @@ class ArticleController extends Controller
         $article->published_at = $article->published ? now() : null;
 
         $article->save();
-
         if ($request->has('tags')) {
             // Vérifie que ce sont bien des tableaux d'ID valides
             $article->tags()->sync($request->tags);
             // `sync()` remplace les tags existants si l'article était édité
 
         }
+
     }
 
     /**
@@ -80,8 +80,14 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        $article = Article::with('categorie')->find($id);
-        return Inertia::render(('Admin/ArticlesAdmin/ArticleEdit'), ['article' => $article]);
+        $categories = Categorie::all(['id', 'name']);
+        $tags = Tag::all(['id', 'name']); // ou ['id', 'label'] si c’est label dans ta table
+        $article = Article::with('categorie', 'tags')->find($id);
+        return Inertia::render(('Admin/ArticlesAdmin/ArticleEdit'), [
+            'article' => $article,
+            'categories' => $categories,
+            'tags' => $tags,
+    ]);
     }
 
     /**
@@ -89,6 +95,7 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         $article = Article::find($id);
 
         $article->title = $request->title;
@@ -96,7 +103,7 @@ class ArticleController extends Controller
         $article->content = $request->content;
         $article->categorie_id = $request->categorie_id;
         $article->published = $request->published ?? false;
-        $article->published_id = $article->published ? now() : null;
+        $article->published_at = $article->published ? now() : null;
 
         // Si une image est envoyée
         if ($request->hasFile('image')) {
@@ -105,6 +112,10 @@ class ArticleController extends Controller
         }
 
         $article->save();
+        if ($request->has('tags')) {
+            $article->tags()->sync($request->tags);
+        }
+
         }
 
     /**
