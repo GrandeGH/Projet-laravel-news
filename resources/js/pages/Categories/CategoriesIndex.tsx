@@ -22,7 +22,7 @@ export default function CategorieIndex({categories}) {
                             </li>
                         ))
                     ) : (
-                        <p>Aucune catégorie trouvée.</p>
+                        <p>Aucune catégorie</p>
                     )}
                 </ul>
             </div>

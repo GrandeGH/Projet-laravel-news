@@ -34,6 +34,11 @@ Route::get('/edit/categorie/{id}', [CategorieController::class, 'edit'])->middle
 Route::put('/update/categorie/{id}', [CategorieController::class, 'update'])->middleware('auth');
 Route::delete('/delete/categorie/{id}', [CategorieController::class, 'destroy'])->middleware('auth');
 
+//Tags
+Route::get('tags', [TagController::class, 'index']);
+Route::get('tagsadmin', [TagController::class, 'indexadmin'])->middleware('auth');
+
+
 //Commentaire
 Route::post('/commentaires', [CommentaireController::class, 'store'])->middleware('auth');
 
