@@ -55,6 +55,7 @@ Route::get('tagsadmin', [TagController::class, 'indexadmin'])->middleware('auth'
 
 Route::middleware(['auth', 'role:admin,webmaster,auteur,lecteur'])->group(function () {
     Route::post('/commentaires', [CommentaireController::class, 'store']);
+    Route::delete('/delete/commentaire/{id}', [CommentaireController::class, 'destroy']);
     Route::post('/likes', [LikeController::class, 'store']);
     Route::delete('/likes', [LikeController::class, 'destroy']);
 });

@@ -34,7 +34,7 @@ export default function Layout({children}: LayoutProps) {
                 <div className="flex justify-between">
                     <div>Tales Fandom</div>
                     {['admin', 'webmaster', 'auteur', 'lecteur'].includes(auth.user?.role) ? (
-                        <p>Visible pour tous les rôles (Dashboard)</p>
+                        <p>Bonjour {auth.user?.name}</p>
                     ) : (
                         " "
                     )}

@@ -119,9 +119,23 @@ export default function ShowArticle({ article }) {
 
                     {article.commentaires.map((com) => (
                         <div key={com.id} className="border border-white rounded mb-2">
-                            <p className="pt-3 ps-3"><strong>@{com.user?.name ?? "anonyme"}</strong></p>
-                            <p className="p-3">{com.content}</p>
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <p className="pt-3 ps-3"><strong>@{com.user?.name ?? "anonyme"}</strong>
+                                    {['admin', 'webmaster', 'auteur'].includes(com.user?.role) && (
+                                        <span className="ms-2 text-sm text-gray-400 border border-white rounded-2xl py-0.5 px-1">{com.user.role}</span>
+                                    )}
+                                    </p>
+                                </div>
 
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-7 me-2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                                </svg>
+                            </div>
+
+                            <div>
+                                <p className="p-3">{com.content}</p>
+                            </div>
                           
                         </div>
                     ))}
