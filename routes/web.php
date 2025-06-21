@@ -15,11 +15,12 @@ Route::get('/', function () {
 })->name('home');
 
 
-//Articles
-Route::get('articles', [ArticleController::class, 'index']);
+//Articles accessible à tous
+Route::get('articles', [ArticleController::class, 'index'])->name('articles'); // name necessaire pour le login dans Controller
+Route::get('/detail/article/{id}', [ArticleController::class, 'show']);
+
 Route::get('/create/article', [ArticleController::class, 'create'])->middleware('auth');
 Route::post('/post/article', [ArticleController::class, 'store'])->middleware('auth');
-Route::get('/detail/article/{id}', [ArticleController::class, 'show']);
 Route::get('/edit/article/{id}', [ArticleController::class, 'edit'])->middleware('auth');
 Route::put('/update/article/{id}', [ArticleController::class, 'update'])->middleware('auth');
 Route::delete('/delete/article/{id}', [ArticleController::class, 'destroy'])->middleware('auth');

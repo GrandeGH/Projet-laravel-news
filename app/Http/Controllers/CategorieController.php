@@ -16,13 +16,17 @@ class CategorieController extends Controller
     public function index()
     {
         $categories = Categorie::all();
-        return Inertia::render(('Categories/CategoriesIndex'));
+        return Inertia::render(('Categories/CategoriesIndex'), [
+            'categories' => $categories
+        ]);
     }
 
     public function indexadmin()
     {
         $categories = Categorie::all();
-        return Inertia::render(('CategoriesAdmin/CategoriesIndex'));
+        return Inertia::render(('CategoriesAdmin/CategoriesIndex'), [
+            'categories' => $categories
+        ]);
     }
 
     /**

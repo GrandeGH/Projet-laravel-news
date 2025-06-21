@@ -43,6 +43,9 @@ export default function Layout({children}: LayoutProps) {
                             <Link href="/articles">
                                 Articles
                             </Link>
+                            <Link href="/jeux">
+                                Jeux
+                            </Link>
                             <Link href="/categories">
                                 Catégories
                             </Link>

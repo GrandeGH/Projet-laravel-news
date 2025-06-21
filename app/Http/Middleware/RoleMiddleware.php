@@ -22,8 +22,11 @@ class RoleMiddleware
 
         $user = auth()->user();
 
+          // Convertir les rôles passés dans le middleware en tableau
+        $allowedRoles = explode(',', $roles); // transforme "lecteur,auteur" en ['lecteur', 'auteur']
+
         // Vérifie si le rôle de l'utilisateur fait partie des rôles autorisés passés au middleware
-        if (!in_array($user->role, $roles)) {
+        if (!in_array($user->role, $allowedRoles)) {
             // Redirige l'utilisateur vers la page précédente avec un message d'erreur
             return redirect()->back()->with('error', 'Vous n\'avez pas les permissions nécessaires pour accéder à cette zone du Royaume.');
             // Autre option : Aborter la requête avec une erreur 403 (Forbidden)

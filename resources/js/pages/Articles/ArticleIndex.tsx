@@ -19,8 +19,9 @@ export default function ArticleIndex({articles}) {
                                 {/* <p>Slug : {article.slug}</p> */}
                                 {/* <p>Categorie : {article.categorie?.name}</p> */}
                                 {/* <p><strong>Content</strong> : {article.content}</p> */}
+                                
+                                {/* image */}
                                 <div>
-                                    {/* image */}
                                     {article.image && (
                                         <img 
                                             src={`/storage/${article.image}`} // important : ajoute /storage/ si l'image est stockée dans public/storage
@@ -29,13 +30,13 @@ export default function ArticleIndex({articles}) {
                                         />
                                     )}
                                 </div>
-                                    
 
                                 <Link href={`/detail/article/${article.id}`}>
                                     <button className="border border-white p-1 cursor-pointer">
                                         Voir l'article
                                     </button>
                                 </Link>
+
                                 {/* Fonction role */}
                                 {['admin', 'webmaster', 'auteur'].includes(auth.user?.role) ? (
                                     
