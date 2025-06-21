@@ -5,34 +5,30 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth; // ajouter 
 
 class RoleMiddleware
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure(\Illuminate\Http\Request): \Symfony\Component\HttpFoundation\Response  $next
+     * @param  mixed  ...$roles  // 👈 On récupère TOUS les rôles passés en paramètres
      */
-    public function handle(Request $request, Closure $next, $roles): Response
+    public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        // Vérifie si l'utilisateur est authentifié
-        if (!auth()->check()) {
-            return redirect('/login'); // Redirige vers la page de connexion s'il n'est pas connecté
-        }
+            // Vérifie que l'utilisateur est authentifié
+            if (! auth()->check() ) {
+                abort(401, 'Tu dois être connecté.');
+            }
 
-        $user = auth()->user();
+            // Si son rôle n'est pas dans le tableau, accès refusé
+            if (! in_array(auth()->user()->role, $roles)) {
+                abort(403, 'Accès refusé');
+            }
 
-          // Convertir les rôles passés dans le middleware en tableau
-        $allowedRoles = explode(',', $roles); // transforme "lecteur,auteur" en ['lecteur', 'auteur']
+            return $next($request);
 
-        // Vérifie si le rôle de l'utilisateur fait partie des rôles autorisés passés au middleware
-        if (!in_array($user->role, $allowedRoles)) {
-            // Redirige l'utilisateur vers la page précédente avec un message d'erreur
-            return redirect()->back()->with('error', 'Vous n\'avez pas les permissions nécessaires pour accéder à cette zone du Royaume.');
-            // Autre option : Aborter la requête avec une erreur 403 (Forbidden)
-            // abort(403, 'Accès non autorisé.');
-        }
-
-        return $next($request);
     }
 }
