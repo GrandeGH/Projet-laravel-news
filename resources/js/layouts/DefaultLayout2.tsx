@@ -33,8 +33,8 @@ export default function Layout({children}: LayoutProps) {
             <header className="bg-amber-50 text-black p-5 fixed top-0 w-screen shadow-xl z-40">
                 <div className="flex justify-between">
                     <div>Tales Fandom</div>
-                    {['admin', 'webmaster', 'auteur', 'lecteur'].includes(auth.user?.role) ? (
-                        <div className="gap-3 flex">
+                    {['admin', 'webmaster', 'auteur'].includes(auth.user?.role) ? (
+                        <div className="gap-3 flex me-20">
                             <Link href="/dashboard" className="text-blue-600 cursor-pointer">Dashboard</Link>
                             <p>Bonjour {auth.user?.name}</p>
                         </div>
@@ -56,6 +56,22 @@ export default function Layout({children}: LayoutProps) {
                                 Tags
                             </Link>
                     </div>
+
+                    {/* Formulaire de recherche */}
+                    <form
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            router.get("/articles", { search: e.target.search.value }, { preserveScroll: true });
+                        }}
+                        className="ms-4"
+                    >
+                        <input
+                            type="text"
+                            name="search"
+                            placeholder="Rechercher..."
+                            className="border border-gray-400 rounded px-3 py-1 text-sm"
+                        />
+                    </form>
 
                     {auth.user ? (
                         <div className="me-3 flex gap-3">

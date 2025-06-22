@@ -8,7 +8,8 @@ export default function ArticleIndex({articles}) {
     return(
         <Layout>
             <div className="p-4">
-                <h1 className="text-3xl font-bold mb-3 text-center">List des articles</h1>
+                <h1 className="text-5xl font-bold mb-8 text-center">Nos articles Tales of</h1>
+
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                     {articles.length === 0 ? (
                         <p>Aucun article disponible</p>
@@ -21,34 +22,46 @@ export default function ArticleIndex({articles}) {
                                 {/* <p><strong>Content</strong> : {article.content}</p> */}
                                 
                                 {/* image */}
-                                <div>
-                                    {article.image && (
-                                        <img 
-                                            src={`/storage/${article.image}`} // important : ajoute /storage/ si l'image est stockée dans public/storage
-                                            alt={article.title}
-                                            className="w-full max-w-md rounded mt-2 object-cover max-h-70 mb-3"
-                                        />
-                                    )}
+                                
+                                    <div>
+                                        {article.image && (
+                                            <img 
+                                                src={`/storage/${article.image}`} // important : ajoute /storage/ si l'image est stockée dans public/storage
+                                                alt={article.title}
+                                                className="w-full max-w-md rounded mt-2 object-cover max-h-70 mb-3"
+                                            />
+                                        )}
+                                    </div>
+                                <div className="flex justify-between items-center">    
+                                    <div>
+                                        <Link href={`/detail/article/${article.id}`}>
+                                            <button className="border border-white p-1 cursor-pointer">
+                                                Voir l'article
+                                            </button>
+                                        </Link>
+
+                                        {/* Fonction role */}
+                                        {['admin', 'webmaster', 'auteur'].includes(auth.user?.role) ? (
+                                            
+                                            <Link className="border border-white p-1" href={`/edit/article/${article.id}`}>
+                                                <button className="cursor-pointer">
+                                                    Modifier
+                                                </button>
+                                            </Link>
+                                            
+                                            ) : (
+                                                " "
+                                            )}
+                                    </div>
+                                    {/* Date de création */}
+                                    <p className="text-sm text-gray-400 mb-2">
+                                        Publié le {new Date(article.created_at).toLocaleDateString('fr-FR', {
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric'
+                                        })}
+                                    </p>
                                 </div>
-
-                                <Link href={`/detail/article/${article.id}`}>
-                                    <button className="border border-white p-1 cursor-pointer">
-                                        Voir l'article
-                                    </button>
-                                </Link>
-
-                                {/* Fonction role */}
-                                {['admin', 'webmaster', 'auteur'].includes(auth.user?.role) ? (
-                                    
-                                    <Link className="border border-white p-1" href={`/edit/article/${article.id}`}>
-                                        <button className="cursor-pointer">
-                                            Modifier
-                                        </button>
-                                    </Link>
-                                    
-                                    ) : (
-                                        " "
-                                    )}
                             </div>
                         ))
                     )}

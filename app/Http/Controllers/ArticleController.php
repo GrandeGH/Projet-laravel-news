@@ -6,6 +6,7 @@ use App\Models\Categorie; // relation to many
 use App\Models\Article;
 use App\Models\Commentaire; 
 use App\Models\Tag;
+use App\Models\User;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use Inertia\Inertia;
@@ -17,10 +18,14 @@ class ArticleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $articles = Article::with('categorie', 'tags')->get();
-        return Inertia::render(('Articles/ArticleIndex'),['articles' => $articles]);
+        $articles = Article::with('categorie', 'tags', 'user')->get();
+        
+        return Inertia::render(('Articles/ArticleIndex'),[
+            'articles' => $articles,
+        ]);
+
     }
 
     /**
@@ -72,7 +77,7 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        $article = Article::with('categorie', 'tags', 'commentaires.user', 'likes')->find($id);
+        $article = Article::with('categorie', 'tags', 'commentaires.user', 'likes', 'user')->find($id);
         return Inertia::render(('Articles/ArticleShow'), ['article' => $article]);
     }
 
