@@ -47,16 +47,16 @@ export default function ShowArticle({ article }) {
                     {(['admin', 'webmaster', 'auteur'].includes(auth.user?.role) || auth.user?.id === article.user_id) && (
                         <div className="relative inline-block text-left">
                             <button onClick={() => setMenuOpen(!menuOpen)} className="p-1 cursor-pointer rounded-full">
-                            {/* image */}
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0ZM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0ZM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0Z" />
-                            </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 transition hover:scale-120">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                </svg>
                             </button>
 
+                            {/* downdrop */}
                             {menuOpen && (
-                            <div className="absolute right-0 mt-2 w-32 bg-white text-black border rounded shadow-lg z-10">
+                            <div className="absolute right-0 mt-2 w-32 bg-white text-black border rounded shadow-lg z-5">
                                 <button
-                                onClick={() => router.get(`/articles/${article.id}/edit`)}
+                                onClick={() => router.get(`/article/edit/${article.id}`)}
                                 className="block w-full text-left px-4 py-2 text-sm cursor-pointer"
                                 >
                                     Modifier

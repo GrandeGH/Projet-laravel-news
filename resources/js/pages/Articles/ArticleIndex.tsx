@@ -40,8 +40,8 @@ export default function ArticleIndex({articles}) {
                                 {/* Fonction role */}
                                 {['admin', 'webmaster', 'auteur'].includes(auth.user?.role) ? (
                                     
-                                    <Link className="border border-white p-1 cursor-pointer" href={`/edit/article/${article.id}`}>
-                                        <button className="">
+                                    <Link className="border border-white p-1" href={`/edit/article/${article.id}`}>
+                                        <button className="cursor-pointer">
                                             Modifier
                                         </button>
                                     </Link>

@@ -30,11 +30,14 @@ export default function Layout({children}: LayoutProps) {
 
     return(
         <>
-            <header className="bg-amber-50 text-black p-5 fixed top-0 w-screen">
+            <header className="bg-amber-50 text-black p-5 fixed top-0 w-screen shadow-xl z-40">
                 <div className="flex justify-between">
                     <div>Tales Fandom</div>
                     {['admin', 'webmaster', 'auteur', 'lecteur'].includes(auth.user?.role) ? (
-                        <p>Bonjour {auth.user?.name}</p>
+                        <div className="gap-3 flex">
+                            <Link href="/dashboard" className="text-blue-600 cursor-pointer">Dashboard</Link>
+                            <p>Bonjour {auth.user?.name}</p>
+                        </div>
                     ) : (
                         " "
                     )}

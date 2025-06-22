@@ -5,6 +5,7 @@ use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\AdminDashboardController;
 
 use App\Http\Middleware\RoleMiddleware;
 
@@ -12,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 
-Route::get('articles', function () {
+Route::get('/', function () {
     return Inertia::render('welcome');
-})->name('articles');
+})->name('home');
 
 
 //Accessible à tous
@@ -36,6 +37,9 @@ Route::middleware(['auth', 'role:admin,webmaster,auteur'])->group(function () {
     Route::get('/edit/article/{id}', [ArticleController::class, 'edit']);
     Route::put('/update/article/{id}', [ArticleController::class, 'update']);
     Route::delete('/delete/article/{id}', [ArticleController::class, 'destroy']);
+
+    //dashboard
+    Route::get('dashboard', [AdminDashboardController::class, 'dashboard']);
 });
 
 
@@ -70,11 +74,11 @@ Route::middleware(['auth', 'role:admin,webmaster,auteur,lecteur'])->group(functi
 });
 
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
-});
+// Route::middleware(['auth', 'verified'])->group(function () {
+//     Route::get('dashboard', function () {
+//         return Inertia::render('dashboard');
+//     })->name('dashboard');
+// });
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
