@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categorie;
+use App\Models\Article;
 use App\Http\Requests\StoreCategorieRequest;
 use App\Http\Requests\UpdateCategorieRequest;
 use Inertia\Inertia;
@@ -47,7 +48,7 @@ class CategorieController extends Controller
 
         $categorie = new Categorie();
         $categorie->name = $request->name;
-        $categorie->slug = $reques->slug;
+        $categorie->slug = $request->slug;
         $categorie->save();
     }
 
@@ -66,7 +67,7 @@ class CategorieController extends Controller
     public function edit($id)
     {
         $categorie = Categorie::find($id);
-        return Intertia::render('Admin/CategoriesAdmin/CategoriesEdit');
+        return Inertia::render('Admin/CategoriesAdmin/CategoriesEdit');
     }
 
     /**

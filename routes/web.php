@@ -36,8 +36,6 @@ Route::middleware(['auth', 'role:admin,webmaster,auteur'])->group(function () {
     Route::get('/edit/article/{id}', [ArticleController::class, 'edit']);
     Route::put('/update/article/{id}', [ArticleController::class, 'update']);
     Route::delete('/delete/article/{id}', [ArticleController::class, 'destroy']);
-
-    
 });
 
 

@@ -1,13 +1,13 @@
 import Layout from "@/layouts/DefaultLayout2"
 import { usePage, router } from "@inertiajs/react"
 import { Link } from "@inertiajs/react"
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react";
 
 export default function ShowArticle({ article }) {
     const { auth } = usePage().props
     const [content, setContent] = useState("");
     const hasLiked = article.likes.some(like => like.user_id === auth.user?.id); // fonction like
-
+    const [menuOpen, setMenuOpen] = useState(false); // dropdown fermé
 
     // fonction commentaire
     const handleSubmit = (e) => {
@@ -20,11 +20,20 @@ export default function ShowArticle({ article }) {
         });
     }
 
+    // supprimer
+    const supprimerArticle = () => {
+    if (confirm("Voulez-vous vraiment supprimer cet article ?")) { // déclenche une fenetre si on veut supprimer ou non
+        router.delete(`/delete/article/${article.id}`);
+        router.get(`/articles`)
+    }
+    };
+    
     return(
         <Layout>
            <div className="max-w-4xl mx-auto py-8 px-4">
 
-                <div>
+                <div className=" flex justify-between">
+                    <div>
                     {article.categorie && (
                         <div className="mb-5">
                             <span className="text-sm text-gray-400 tracking-wide">
@@ -32,6 +41,43 @@ export default function ShowArticle({ article }) {
                             </span>
                         </div>
                     )}
+                    </div>
+                    
+                    {/* bouton edit et supprimer */}
+                    {(['admin', 'webmaster', 'auteur'].includes(auth.user?.role) || auth.user?.id === article.user_id) && (
+                        <div className="relative inline-block text-left">
+                            <button onClick={() => setMenuOpen(!menuOpen)} className="p-1 cursor-pointer rounded-full">
+                            {/* image */}
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0ZM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0ZM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0Z" />
+                            </svg>
+                            </button>
+
+                            {menuOpen && (
+                            <div className="absolute right-0 mt-2 w-32 bg-white text-black border rounded shadow-lg z-10">
+                                <button
+                                onClick={() => router.get(`/articles/${article.id}/edit`)}
+                                className="block w-full text-left px-4 py-2 text-sm cursor-pointer"
+                                >
+                                    Modifier
+                                </button>
+                                <button
+                                onClick={supprimerArticle}
+                                className="block w-full text-left px-4 py-2 text-sm text-red-600 cursor-pointer"
+                                >
+                                    Supprimer
+                                </button>
+                            </div>
+                            )}
+                        </div>
+                        )}
+
+
+                    {/* <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 cursor-pointer">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                        </svg>
+                    </div> */}
                 </div>
 
                 {/* Titre */}
