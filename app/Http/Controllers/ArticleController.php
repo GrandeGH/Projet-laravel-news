@@ -82,7 +82,7 @@ class ArticleController extends Controller
     public function edit($id)
     {
         $categories = Categorie::all(['id', 'name']);
-        $tags = Tag::all(['id', 'name']); // ou ['id', 'label'] si c’est label dans ta table
+        $tags = Tag::all(['id', 'name']); 
         $article = Article::with('categorie', 'tags')->find($id);
         return Inertia::render(('Admin/ArticlesAdmin/ArticleEdit'), [
             'article' => $article,

@@ -14,7 +14,7 @@ export default function CategorieIndex({categories}) {
                         categories.map((categorie) => (
                             <li key={categorie.id} className="mb-2">
                                 <Link 
-                                    href={`/categories/${categorie.slug}`} 
+                                    href={`/detail/categorie/${categorie.id}`} 
                                     className="text-blue-600 hover:underline"
                                 >
                                     {categorie.name}

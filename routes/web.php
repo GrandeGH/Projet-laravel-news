@@ -6,67 +6,71 @@ use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\LikeController;
 
-// use App\Http\Middleware\IsAdmin;
-// use App\Http\Middleware\IsAuteur;
-// use App\Http\Middleware\IsWebmaster;
-// use App\Http\Middleware\IsLecteur;
 use App\Http\Middleware\RoleMiddleware;
 
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 
-Route::get('/', function () {
+Route::get('articles', function () {
     return Inertia::render('welcome');
-})->name('home');
+})->name('articles');
 
 
-//Articles accessible à tous
+//Accessible à tous
+    //articles
 Route::get('articles', [ArticleController::class, 'index'])->name('articles'); // name necessaire pour le login dans Controller
 Route::get('/detail/article/{id}', [ArticleController::class, 'show']);
+    //categorie
+Route::get('categories', [CategorieController::class, 'index']);
+Route::get('/detail/categorie/{id}', [CategorieController::class, 'show']);
+    //tags
+Route::get('tags', [TagController::class, 'index']);
+Route::get('/detail/tag/{id}', [TagController::class, 'show']);
 
-Route::middleware(['auth', 'role:admin,webmaster,auteur,lecteur'])->group(function () {
+
+//articles pour roles
+Route::middleware(['auth', 'role:admin,webmaster,auteur'])->group(function () {
     Route::get('/create/article', [ArticleController::class, 'create']);
     Route::post('/post/article', [ArticleController::class, 'store']);
     Route::get('/edit/article/{id}', [ArticleController::class, 'edit']);
     Route::put('/update/article/{id}', [ArticleController::class, 'update']);
     Route::delete('/delete/article/{id}', [ArticleController::class, 'destroy']);
+
+    
 });
 
-// Route::get('/create/article', [ArticleController::class, 'create'])->middleware('auth');
-// Route::post('/post/article', [ArticleController::class, 'store'])->middleware('auth');
-// Route::get('/edit/article/{id}', [ArticleController::class, 'edit'])->middleware('auth');
-// Route::put('/update/article/{id}', [ArticleController::class, 'update'])->middleware('auth');
-// Route::delete('/delete/article/{id}', [ArticleController::class, 'destroy'])->middleware('auth');
 
-//Catégories
-Route::get('categories', [CategorieController::class, 'index']);
-Route::get('cateogriesadmin', [CategorieController::class, 'indexadmin'])->middleware('auth');
-Route::get('/create/categorie', [CategorieController::class, 'create'])->middleware('auth');
-Route::post('/post/categorie', [CategorieController::class, 'store'])->middleware('auth');
-Route::get('/edit/categorie/{id}', [CategorieController::class, 'edit'])->middleware('auth');
-Route::put('/update/categorie/{id}', [CategorieController::class, 'update'])->middleware('auth');
-Route::delete('/delete/categorie/{id}', [CategorieController::class, 'destroy'])->middleware('auth');
+//categories et tags pour roles
+Route::middleware(['auth', 'role:admin,webmaster'])->group(function () {
+    //catégories
+    Route::get('cateogriesadmin', [CategorieController::class, 'indexadmin']);
+    Route::get('/create/categorie', [CategorieController::class, 'create']);
+    Route::post('/post/categorie', [CategorieController::class, 'store']);
+    Route::get('/edit/categorie/{id}', [CategorieController::class, 'edit']);
+    Route::put('/update/categorie/{id}', [CategorieController::class, 'update']);
+    Route::delete('/delete/categorie/{id}', [CategorieController::class, 'destroy']);
+    
+    //tags
+    Route::get('tagsadmin', [TagController::class, 'indexadmin']);
+    Route::get('/create/tag', [TagController::class, 'create']);
+    Route::post('/post/tag', [TagController::class, 'store']);
+    Route::get('/edit/tag/{id}', [TagController::class, 'edit']);
+    Route::put('/update/tag/{id}', [TagController::class, 'update']);
+    Route::delete('/delete/tag/{id}', [TagController::class, 'destroy']);
+});
 
-//Tags
-Route::get('tags', [TagController::class, 'index']);
-Route::get('tagsadmin', [TagController::class, 'indexadmin'])->middleware('auth');
 
-
+//commentaire et like aux users
 Route::middleware(['auth', 'role:admin,webmaster,auteur,lecteur'])->group(function () {
+    //commentaires
     Route::post('/commentaires', [CommentaireController::class, 'store']);
     Route::delete('/delete/commentaire/{id}', [CommentaireController::class, 'destroy']);
+    //likes
     Route::post('/likes', [LikeController::class, 'store']);
     Route::delete('/likes', [LikeController::class, 'destroy']);
 });
 
-
-// //Commentaire
-// Route::post('/commentaires', [CommentaireController::class, 'store'])->middleware('auth');
-
-// // Likes
-// Route::post('/likes', [LikeController::class, 'store'])->middleware('auth');
-// Route::delete('/likes', [LikeController::class, 'destroy'])->middleware('auth');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {

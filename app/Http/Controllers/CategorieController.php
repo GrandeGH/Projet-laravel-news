@@ -44,6 +44,11 @@ class CategorieController extends Controller
     public function store(Request $request)
     {
         //
+
+        $categorie = new Categorie();
+        $categorie->name = $request->name;
+        $categorie->slug = $reques->slug;
+        $categorie->save();
     }
 
     /**
@@ -51,7 +56,8 @@ class CategorieController extends Controller
      */
     public function show($id)
     {
-        //
+        $categorie = Categorie::with(['articles.user'])->find($id);
+        return Inertia::render(('Categories/CategoriesShow'), ['categorie' =>$categorie]);
     }
 
     /**
@@ -59,7 +65,8 @@ class CategorieController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categorie = Categorie::find($id);
+        return Intertia::render('Admin/CategoriesAdmin/CategoriesEdit');
     }
 
     /**
@@ -67,7 +74,11 @@ class CategorieController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $categorie = Categorie::find($id);
+
+        $categorie->name = $request->name;
+        $categorie->slug = $categorie->slug;
+        $categorie->save();
     }
 
     /**

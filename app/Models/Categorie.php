@@ -10,7 +10,7 @@ class Categorie extends Model
     protected $fillable = ['name', 'slug'];
 
     public function articles () {
-        return $this->hasMany(Article::class); // une catégorie peut avoir plsuierus articles
+        return $this->hasMany(Article::class); // une catégorie peut avoir plusieurs articles
     }
 
     /** @use HasFactory<\Database\Factories\CategorieFactory> */
