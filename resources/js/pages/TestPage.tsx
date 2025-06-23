@@ -9,3 +9,40 @@ Lorem ipsum dolor, sit amet consectetur adipisicing elit. Excepturi temporibus a
   <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
 </svg>
 
+
+// resources/css/app.css
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+        background-image: url('/img/Bg_Tales_of_Arise.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        min-height: 100%;
+        position: relative;
+        background-color: rgba(0, 0, 0, 0.5); /* opacité noire */
+        z-index: 0;
+    }
+
+    body::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* opacité noire */
+        z-index: -1;
+        pointer-events: none; /* permet d'interagir avec les éléments */
+    }
+
+    html, body {
+        min-height: 100vh;
+    }
+}

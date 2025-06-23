@@ -22,4 +22,9 @@ class AdminDashboardController extends Controller
             ]
         ]);
     }
+
+    public function allusers()
+    {
+        return Inertia::render();
+    }
 }

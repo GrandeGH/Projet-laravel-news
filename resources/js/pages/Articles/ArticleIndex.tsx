@@ -54,8 +54,8 @@ export default function ArticleIndex({articles}) {
                                             )}
                                     </div>
                                     {/* Date de création */}
-                                    <p className="text-sm text-gray-400 mb-2">
-                                        Publié le {new Date(article.created_at).toLocaleDateString('fr-FR', {
+                                    <p className="text-sm text-gray-400 mb-2 me-0.5">
+                                        {new Date(article.created_at).toLocaleDateString('fr-FR', {
                                             year: 'numeric',
                                             month: 'long',
                                             day: 'numeric'
