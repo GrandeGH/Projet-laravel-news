@@ -7,7 +7,7 @@ export default function TagShow({tags}) {
     return(
         <Layout>
             <div>
-                
+                <p>Page Tags Show</p>
             </div>
         </Layout>
         )

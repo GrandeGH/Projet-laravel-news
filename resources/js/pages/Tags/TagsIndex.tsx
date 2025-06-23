@@ -7,18 +7,31 @@
     
         return(
             <Layout>
+                {['admin', 'webmaster', 'auteur'].includes(auth.user?.role) ? (
+                    <div className="mt-1">
+                        <Link href="/create/article" className="text-orange-300 hover:text-white transition cursor-pointer flex gap-2 items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-7 ">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                                <p>Créer un tag</p>
+                        </Link>                                           
+                    </div>
+                ) : (
+                    " "
+                )}
                 <div className="m-6">
+                    
                     <h2 className=" mb-5 text-3xl">Liste des tags</h2>
     
                    <ul className="flex flex-wrap gap-3">
                        {tags.length > 0 ? (
                             tags.map((tag) => (
                                 <li key={tag.id} 
-                                    className="gap-1 border border-white rounded-3xl flex justify-center p-1 px-2 text-sm">
+                                    className="gap-1 border border-white rounded-3xl flex justify-center p-1 px-2 text-sm
+                                    hover:bg-white hover:text-black ">
                                     <Link 
-                                        href={`/tags/${tag.slug}`}
-                                        className="p-0.5"
-                                    >
+                                        href={`/detail/tag/${tag.id}`}
+                                        className="p-0.5 cursor-pointer">
                                         {tag.name}
                                     </Link>
                                     <div>

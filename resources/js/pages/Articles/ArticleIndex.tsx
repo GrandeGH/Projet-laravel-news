@@ -7,29 +7,29 @@ export default function ArticleIndex({articles}) {
 
     return(
         <Layout>
-            <div className="p-6 max-w-7xl mx-auto ">
+            {/* créer un article par role */}
                 {['admin', 'webmaster', 'auteur'].includes(auth.user?.role) ? (
-                                            <div className="mb-4">
-                                                <Link href="/create/article" className="text-orange-300 hover:text-white transition cursor-pointer flex gap-2 items-center">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-7 ">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                                    </svg>
-                                                      <p>Créer un article</p>
-                                                </Link>                                           
-                                            </div>
-                                        ) : (
-                                            " "
-                                        )}
-                <h1 className="text-5xl font-bold mb-8 text-center">Nos articles Tales of</h1>
+                    <div className="mt-1 mb-4">
+                        <Link href="/create/article" className="text-orange-300 hover:text-white transition cursor-pointer flex gap-2 items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-7 ">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                                <p>Créer un article</p>
+                        </Link>                                           
+                    </div>
+                ) : (
+                    " "
+                )}
+            <div className="p-6 max-w-7xl mx-auto ">
+                <h1 className="text-5xl font-bold mb-8 text-center">Nos articles</h1>
 
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
                     {articles.length === 0 ? (
                         <p className="text-center text-gray-300 text-lg">Aucun article disponible</p>
                     ) : (
                         articles.map((article) => (
-                            <div className="border border-white sm:m-0 lg:m-3 p-3">
-                                {/* image */}
-                                
+                            <div className="border border-white sm:m-0 lg:m-3 p-3 flex flex-col justify-between">
+                                {/* image */}           
                                     <div className="border border-white overflow-hidden">
                                         {article.image && (
                                             <img 
@@ -39,7 +39,7 @@ export default function ArticleIndex({articles}) {
                                             />
                                         )}
                                     </div>
-                                <h2 className="text-2xl font-semibold my-2">{article.title}</h2>
+                                <h2 className="text-2xl font-semibold my-2 line-clamp-2" title={article.title}>{article.title}</h2>
                                 
                                 <div className="mt-auto flex justify-between items-center">    
                                     <div className="space-x-2">

@@ -36,8 +36,12 @@ export default function ShowArticle({ article }) {
                     <div>
                     {article.categorie && (
                         <div className="mb-5">
-                            <span className="text-sm text-gray-400 tracking-wide">
-                                <strong>Catégorie :</strong> {article.categorie.name}
+                            <span className="text-sm text-gray-400 tracking-wide ">
+                                <strong>Catégorie : </strong> 
+                                <Link href="/detail/categorie/{id}"
+                                className="hover:text-white">
+                                {article.categorie.name}
+                                </Link>
                             </span>
                         </div>
                     )}
@@ -46,7 +50,7 @@ export default function ShowArticle({ article }) {
                     {/* bouton edit et supprimer */}
                     {(['admin', 'webmaster', 'auteur'].includes(auth.user?.role) || auth.user?.id === article.user_id) && (
                         <div className="relative inline-block text-left">
-                            <button onClick={() => setMenuOpen(!menuOpen)} className="p-1 cursor-pointer rounded-full">
+                            <button onClick={() => setMenuOpen(!menuOpen)} title="Edit" className="p-1 cursor-pointer rounded-full">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 transition hover:scale-120">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                 </svg>
@@ -93,13 +97,14 @@ export default function ShowArticle({ article }) {
                         className="w-full max-h-90 object-cover"
                     />
                 )}
-                {/* tag */}
-                <div className="flex flex-wrap my-3 gap-2">
+                {/* --- tag ---- */}
+                <div className="flex flex-wrap my-5 gap-2">
                     {article.tags?.length > 0 ? (
                         article.tags.map(tag => (
                             <span 
                                 key={tag.id}
-                                className="text-sm border border-white rounded-3xl px-3 py-1">
+                                className="text-sm border border-white rounded-3xl px-3 py-1 cursor-pointer
+                                hover:bg-white hover:text-black ">
                                 {tag.name}
                             </span>
                         )) 
@@ -177,7 +182,7 @@ export default function ShowArticle({ article }) {
                     )}          
 
                     {article.commentaires.map((com) => (
-                        <div key={com.id} className="border border-white rounded mb-2">
+                        <div key={com.id} className="border border-white rounded mb-2 bg-green-100/20">
                             <div className="flex items-center justify-between">
                                 <div>
                                     <p className="pt-3 ps-3"><strong>@{com.user?.name ?? "anonyme"}</strong>

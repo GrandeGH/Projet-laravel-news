@@ -54,7 +54,7 @@ export default function ArticleEdit( {article, categories, tags} ) {
     return(
         <Layout>
             <div className="m-6 flex flex-col">
-                <div className="text-3xl mb-5">Modifier</div>
+                <div className="text-3xl mb-5">Modifier l'article</div>
                 <form action="" onSubmit={modifier} className="flex flex-col">
                     <label htmlFor="">Titre</label>
                     <input type="text" className="mb-3 border border-white rounded" name="title" 
@@ -99,30 +99,30 @@ export default function ArticleEdit( {article, categories, tags} ) {
                     </select>
                     
 
-                    <div>
+                    <div className="mb-3">
                         <label className="mb-4">Ajoutez les tags</label>
-                            <div className="flex flex-wrap gap-2.5">
-                                {tags.map((tag) => (
-                                    <label key={tag.id} className="flex items-center gap-1">
-                                    <input
-                                        type="checkbox"
-                                        value={tag.id}
-                                        checked={values.tags.includes(tag.id)}
-                                        onChange={(e) => {
-                                        const newTags = e.target.checked
-                                            ? [...values.tags, tag.id]
-                                            : values.tags.filter((t) => t !== tag.id);
-                                        setValues({ ...values, tags: newTags });
-                                        }}
-                                    />
-                                    {tag.name}
-                                    </label>
-                                ))}
-                            </div>
+                        <div className="flex flex-wrap gap-2.5">
+                            {tags.map((tag) => (
+                                <label key={tag.id} className="flex items-center gap-1">
+                                <input
+                                    type="checkbox"
+                                    value={tag.id}
+                                    checked={values.tags.includes(tag.id)}
+                                    onChange={(e) => {
+                                    const newTags = e.target.checked
+                                        ? [...values.tags, tag.id]
+                                        : values.tags.filter((t) => t !== tag.id);
+                                    setValues({ ...values, tags: newTags });
+                                    }}
+                                />
+                                {tag.name}
+                                </label>
+                            ))}
                         </div>
+                    </div>
 
-                    
-                    <label>
+
+                    <label className="mb-3">
                         <input 
                             type="checkbox"
                             checked={values.published}

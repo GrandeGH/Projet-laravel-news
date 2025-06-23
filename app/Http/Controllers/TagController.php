@@ -53,7 +53,8 @@ class TagController extends Controller
      */
     public function show($id)
     {
-        //
+        $tag = Tag::all()->find($id);
+        return Inertia::render(('Tags/TagsShow'), ['tag' => $tag]);
     }
 
     /**
