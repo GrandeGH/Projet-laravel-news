@@ -14,6 +14,8 @@ export default function AdminDashboard({ stats }) {
                     <StatCard title="Articles" value={stats.articles} />
                     <StatCard title="Commentaires" value={stats.commentaires} />
                     <StatCard title="Catégories" value={stats.categories} />
+                    <StatCard title="Tags" value={stats.tags} />
+
                 </div>
             </div>
         </Layout>
@@ -22,9 +24,9 @@ export default function AdminDashboard({ stats }) {
 
 function StatCard({ title, value }) {
     return (
-        <div className="bg-white/5 border border-white/20 text-white rounded-xl shadow p-6 text-center transition hover:scale-105 duration-200">
+        <div className="bg-white/10 border border-white/20 text-white rounded-xl shadow p-6 text-center transition hover:scale-105 duration-100">
             <h2 className="text-lg font-semibold mb-2">{title}</h2>
-            <p className="text-3xl font-bold">{value}</p>
+            <p className="text-5xl font-bold">{value}</p>
         </div>
     )
 }

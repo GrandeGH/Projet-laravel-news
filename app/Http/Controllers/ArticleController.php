@@ -20,7 +20,9 @@ class ArticleController extends Controller
      */
     public function index(Request $request)
     {
-        $articles = Article::with('categorie', 'tags', 'user')->get();
+        $articles = Article::with('categorie', 'tags', 'user')
+            ->orderBy('created_at', 'desc')        
+            ->get();
         
         return Inertia::render(('Articles/ArticleIndex'),[
             'articles' => $articles,
@@ -101,7 +103,11 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request->all());
+        // dd(
+        //     $request->all(),
+        //     $request->file('image'),
+        //     $request->hasFile('image')
+        // );
         $article = Article::find($id);
 
         $article->title = $request->title;

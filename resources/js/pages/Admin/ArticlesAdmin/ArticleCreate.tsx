@@ -50,7 +50,7 @@ export default function CreateArticle( { categories, tags }) {
 
     return(
         <Layout>
-            <div className="p-5"> 
+            <div className="m-6"> 
                 <h1 className="text-2xl mb-3">Créer un article</h1>
                 <form onSubmit={ajouter} className="">
                     <div className="">

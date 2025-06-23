@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Article;
 use App\Models\Commentaire;
+use App\Models\Tag;
 use App\Models\Categorie;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
@@ -19,6 +20,7 @@ class AdminDashboardController extends Controller
                 'articles' => Article::count(),
                 'commentaires' => Commentaire::count(),
                 'categories' => Categorie::count(),
+                'tags' => Tag::count(),
             ]
         ]);
     }

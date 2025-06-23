@@ -7,8 +7,8 @@ export default function CategorieIndex({categories}) {
 
     return(
         <Layout>
-            <div className="m-5">
-                <h2 className=" mb-3 text-2xl">Liste des catégories</h2>
+            <div className="m-6">
+                <h2 className=" mb-5 text-3xl">Liste des catégories</h2>
 
                 <ul className="list-disc list-inside">
                     {categories.length > 0 ? (

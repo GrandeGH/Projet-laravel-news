@@ -29,42 +29,46 @@ export default function ArticleEdit( {article, categories, tags} ) {
             formData.append(`tags[${i}]`, tagId)
         })
 
-        if (values.image) {
-            formData.append("image", values.image)
-        }
-    
-        // router.put(`/update/article/${article.id}`, formData);
-        // router.get(`/detail/article/${article.id}`) //redirect à la page 
-
-        // console.log("Catégorie ID envoyée :", values.categorie_id);
-        // router.put(`/update/article/${article.id}`, formData, {
-        // onSuccess: () => router.get(`/detail/article/${article.id}`)
-        // });
-
-        router.post(`/update/article/${article.id}`, formData, {
-        onSuccess: () => router.get(`/detail/article/${article.id}`)
-        });
-        
+ if (values.image) {
+        formData.append("image", values.image);
+        console.log("📸 Image détectée :", values.image.name, values.image.size, values.image.type);
+    } else {
+        console.warn("⚠️ Aucune image sélectionnée !");
     }
+
+    // 🔍 DEBUG : Affiche tout ce qui est dans le FormData
+    console.log("📦 Données envoyées :");
+    for (const [key, value] of formData.entries()) {
+        console.log(`${key}:`, value);
+    }
+
+    // Envoi
+    router.post(`/update/article/${article.id}`, formData, {
+        onSuccess: () => router.get(`/detail/article/${article.id}`),
+        onError: (errors) => {
+            console.error("❌ Erreurs lors de la soumission :", errors);
+        }
+    });
+};
 
     return(
         <Layout>
-            <div className="flex flex-col">
-                <div>Modifier</div>
+            <div className="m-6 flex flex-col">
+                <div className="text-3xl mb-5">Modifier</div>
                 <form action="" onSubmit={modifier} className="flex flex-col">
                     <label htmlFor="">Titre</label>
-                    <input type="text" className="border border-white rounded" name="title" 
+                    <input type="text" className="mb-3 border border-white rounded" name="title" 
                         onChange={(e) => setValues({...values, title: e.target.value})} value={values.title} 
                     />
                     
                     <label htmlFor="">Slug</label>
-                    <input type="text" className="border border-white rounded" name="slug" 
+                    <input type="text" className="mb-3 border border-white rounded" name="slug" 
                         onChange={(e) => setValues({...values, slug: e.target.value})} value={values.slug} 
                     />
 
                     <label htmlFor="content">Content</label>
                     <textarea
-                        className="border border-white rounded"
+                        className="mb-3 border border-white rounded"
                         name="content"
                         value={values.content}
                         onChange={(e) => setValues({ ...values, content: e.target.value })}
@@ -74,7 +78,7 @@ export default function ArticleEdit( {article, categories, tags} ) {
                     <label htmlFor="">Nouvelle image</label>
                     <input 
                         type="file" 
-                        className="border border-white rounded"
+                        className="mb-3 border border-white rounded"
                         accept="image/*"
                         onChange={(e) => setValues({ ...values, image: e.target.files[0] })}
                     />
@@ -82,7 +86,7 @@ export default function ArticleEdit( {article, categories, tags} ) {
                     <label htmlFor="categorie_id">Catégorie</label>
                     <select
                     name="categorie_id"
-                    className="border border-white rounded"
+                    className="mb-3 border border-white rounded"
                     value={values.categorie_id}
                     onChange={(e) => setValues({ ...values, categorie_id: e.target.value })}
                     >
@@ -126,8 +130,9 @@ export default function ArticleEdit( {article, categories, tags} ) {
                         />
                         Article à publier
                     </label>
-
-                    <button type="submit" className="border border-white rounded cursor-pointer">Envoyer la modification</button>
+                    <div>
+                        <button type="submit" className="mt-3 border border-white rounded cursor-pointer px-3 py-1">Envoyer la modification</button>
+                    </div>
                 </form>
             </div>
         </Layout>

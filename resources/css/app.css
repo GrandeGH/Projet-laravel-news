@@ -155,5 +155,30 @@
 
     body {
         @apply bg-background text-foreground;
+        background-image: url('/img/Bg_Tales_of_Arise.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        min-height: 100%;
+        position: relative;
+        background-color: rgba(0, 0, 0, 0.5); /* opacité noire */
+        z-index: 0;
+    }
+
+    body::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.7); /* opacité noire */
+        z-index: -1;
+        pointer-events: none; /* permet d'interagir avec les éléments */
+    }
+
+    html, body {
+        min-height: 100vh;
     }
 }

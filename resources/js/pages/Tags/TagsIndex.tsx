@@ -7,8 +7,8 @@
     
         return(
             <Layout>
-                <div className="m-5">
-                    <h2 className=" mb-3 text-2xl">Liste des tags</h2>
+                <div className="m-6">
+                    <h2 className=" mb-5 text-3xl">Liste des tags</h2>
     
                    <ul className="flex flex-wrap gap-3">
                        {tags.length > 0 ? (

@@ -1,7 +1,5 @@
 import React from "react";
 import { Link, usePage, router } from "@inertiajs/react";
-import Navbar from "@/components/Navbar";
-import { url } from "inspector";
 
 interface LayoutProps {
     children: React.ReactNode;
