@@ -60,6 +60,9 @@ Route::middleware(['auth', 'role:admin,webmaster'])->group(function () {
     Route::get('/edit/tag/{id}', [TagController::class, 'edit']);
     Route::put('/update/tag/{id}', [TagController::class, 'update']);
     Route::delete('/delete/tag/{id}', [TagController::class, 'destroy']);
+
+    // administratifs
+    Route::get('allusers', [AdminDashboardController::class, 'allusers']);
 });
 
 

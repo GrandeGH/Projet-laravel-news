@@ -1,5 +1,5 @@
 import Layout from "@/layouts/DefaultLayout2"
-import { usePage } from "@inertiajs/react"
+import { Link, usePage } from "@inertiajs/react"
 
 export default function AdminDashboard({ stats }) {
     const { auth } = usePage().props
@@ -10,11 +10,21 @@ export default function AdminDashboard({ stats }) {
                 <h1 className="text-3xl font-bold mb-8 text-white">Tableau de bord administrateur</h1>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                    <StatCard title="Utilisateurs" value={stats.users} />
-                    <StatCard title="Articles" value={stats.articles} />
-                    <StatCard title="Commentaires" value={stats.commentaires} />
-                    <StatCard title="Catégories" value={stats.categories} />
-                    <StatCard title="Tags" value={stats.tags} />
+                    <Link href="/allusers" className="cursor-pointer">
+                        <StatCard title="Utilisateurs" value={stats.users} />
+                    </Link>
+                    <Link href="/articles" className="cursor-pointer">
+                        <StatCard title="Articles" value={stats.articles} />
+                    </Link>
+                    <Link href="" className="cursor-pointer">
+                        <StatCard title="Commentaires" value={stats.commentaires} />
+                    </Link>
+                    <Link href="/categories" className="cursor-pointer">
+                        <StatCard title="Catégories" value={stats.categories} />
+                    </Link>
+                    <Link href="/tags" className="cursor-pointer">
+                        <StatCard title="Tags" value={stats.tags} />
+                    </Link>
 
                 </div>
             </div>

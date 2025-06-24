@@ -9,12 +9,12 @@ export default function ArticleIndex({articles}) {
         <Layout>
             {/* créer un article par role */}
                 {['admin', 'webmaster', 'auteur'].includes(auth.user?.role) ? (
-                    <div className="mt-1 mb-4">
+                    <div className="mt-1 mb-4 max-w-40">
                         <Link href="/create/article" className="text-orange-300 hover:text-white transition cursor-pointer flex gap-2 items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-7 ">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                             </svg>
-                                <p>Créer un article</p>
+                            <p>Créer un article</p>
                         </Link>                                           
                     </div>
                 ) : (
@@ -44,7 +44,7 @@ export default function ArticleIndex({articles}) {
                                 <div className="mt-auto flex justify-between items-center">    
                                     <div className="space-x-2">
                                         <Link href={`/detail/article/${article.id}`}>
-                                            <button className="border border-white py-1  px-3 cursor-pointer">
+                                            <button className="border border-white py-1  px-3 cursor-pointer hover:bg-orange-400">
                                                 Voir l'article
                                             </button>
                                         </Link>
@@ -53,7 +53,7 @@ export default function ArticleIndex({articles}) {
                                         {['admin', 'webmaster', 'auteur'].includes(auth.user?.role) ? (
                                             
                                             <Link className="" href={`/edit/article/${article.id}`}>
-                                                <button className="border border-white py-1 px-3 cursor-pointer">
+                                                <button className="border border-white py-1 px-3 cursor-pointer hover:bg-orange-400 ">
                                                     Modifier
                                                 </button>
                                             </Link>

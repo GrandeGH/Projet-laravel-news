@@ -29,27 +29,35 @@ export default function ArticleEdit( {article, categories, tags} ) {
             formData.append(`tags[${i}]`, tagId)
         })
 
- if (values.image) {
-        formData.append("image", values.image);
-        console.log("📸 Image détectée :", values.image.name, values.image.size, values.image.type);
-    } else {
-        console.warn("⚠️ Aucune image sélectionnée !");
-    }
-
-    // 🔍 DEBUG : Affiche tout ce qui est dans le FormData
-    console.log("📦 Données envoyées :");
-    for (const [key, value] of formData.entries()) {
-        console.log(`${key}:`, value);
-    }
-
-    // Envoi
-    router.post(`/update/article/${article.id}`, formData, {
-        onSuccess: () => router.get(`/detail/article/${article.id}`),
-        onError: (errors) => {
-            console.error("❌ Erreurs lors de la soumission :", errors);
+        if (values.image) {
+            formData.append("image", values.image);
+            console.log("📸 Image détectée :", values.image.name, values.image.size, values.image.type);
+        } else {
+            console.warn("⚠️ Aucune image sélectionnée !");
         }
-    });
-};
+
+        // 🔍 DEBUG : Affiche tout ce qui est dans le FormData
+        console.log("📦 Données envoyées :");
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+        }
+
+        // Envoi
+        router.post(`/update/article/${article.id}`, formData, {
+            onSuccess: () => router.get(`/detail/article/${article.id}`),
+            onError: (errors) => {
+                console.error("❌ Erreurs lors de la soumission :", errors);
+            }
+        });
+        };
+
+            // supprimer
+        const supprimerArticle = () => {
+        if (confirm("Voulez-vous vraiment supprimer cet article ?")) { // déclenche une fenetre si on veut supprimer ou non
+            router.delete(`/delete/article/${article.id}`);
+            router.get(`/articles`)
+        }
+        };
 
     return(
         <Layout>
@@ -100,8 +108,8 @@ export default function ArticleEdit( {article, categories, tags} ) {
                     
 
                     <div className="mb-3">
-                        <label className="mb-4">Ajoutez les tags</label>
-                        <div className="flex flex-wrap gap-2.5">
+                        <label className="">Tags</label>
+                        <div className="flex flex-wrap gap-2.5 mt-3">
                             {tags.map((tag) => (
                                 <label key={tag.id} className="flex items-center gap-1">
                                 <input
@@ -131,7 +139,14 @@ export default function ArticleEdit( {article, categories, tags} ) {
                         Article à publier
                     </label>
                     <div>
-                        <button type="submit" className="mt-3 border border-white rounded cursor-pointer px-3 py-1">Envoyer la modification</button>
+                        <div>
+                            <button type="submit" className="mt-3 border border-white rounded cursor-pointer px-3 py-1">Envoyer la modification</button>
+                        </div>
+                        <div>
+                            <button onClick={supprimerArticle} type="submit" className="mt-3 border border-white text-red-600 rounded cursor-pointer px-3 py-1">
+                                Supprimer l'article
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>

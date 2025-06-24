@@ -45,7 +45,10 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $tag = new Tag();
+        $tag->name = $request->name;
+        $tag->slug = $request->slug;
+        $tag->save();
     }
 
     /**
@@ -62,7 +65,8 @@ class TagController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tag = Tag::all()->find($id);
+        return Inertia::render(('Admin/TagsAdmin/TagsEdit'), ['tag' => $tag]);
     }
 
     /**
@@ -70,7 +74,10 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $tag = Tag::find($id);
+        $tag->name = $request->name;
+        $tag->slug = $tag->slug;
+        $tag->save();
     }
 
     /**
@@ -78,6 +85,7 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $tag = Tag::find($id);
+        $tag->delete();
     }
 }

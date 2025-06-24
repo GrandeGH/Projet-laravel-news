@@ -36,7 +36,7 @@ class CategorieController extends Controller
     public function create()
     {
         $categories = Categorie::all();
-        return Inertia::render(('CategoriesAdmin/CategoriesCreate'));
+        return Inertia::render(('Admin/CategoriesAdmin/CategoriesCreate'));
     }
 
     /**
@@ -76,7 +76,6 @@ class CategorieController extends Controller
     public function update(Request $request, $id)
     {
         $categorie = Categorie::find($id);
-
         $categorie->name = $request->name;
         $categorie->slug = $categorie->slug;
         $categorie->save();

@@ -27,6 +27,9 @@ class AdminDashboardController extends Controller
 
     public function allusers()
     {
-        return Inertia::render();
+        $users = User::select('id', 'name', 'role', 'email', 'created_at')->get();
+        return Inertia::render('Admin/AllUsers', [
+            'users' => $users
+        ]);
     }
 }
