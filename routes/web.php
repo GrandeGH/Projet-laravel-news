@@ -6,7 +6,9 @@ use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\UserProfileController;
 
+//Middleware
 use App\Http\Middleware\RoleMiddleware;
 
 use Illuminate\Support\Facades\Route;
@@ -74,6 +76,12 @@ Route::middleware(['auth', 'role:admin,webmaster,auteur,lecteur'])->group(functi
     //likes
     Route::post('/likes', [LikeController::class, 'store']);
     Route::delete('/likes', [LikeController::class, 'destroy']);
+});
+
+//profil
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profil', [UserProfileController::class, 'show'])->name('profil');
+    // Route::patch('/settings/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 
