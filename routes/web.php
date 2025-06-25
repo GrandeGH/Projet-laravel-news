@@ -8,6 +8,7 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\UserProfileController;
 
+
 //Middleware
 use App\Http\Middleware\RoleMiddleware;
 
@@ -30,8 +31,8 @@ Route::get('/detail/categorie/{id}', [CategorieController::class, 'show']);
     //tags
 Route::get('tags', [TagController::class, 'index']);
 Route::get('/detail/tag/{id}', [TagController::class, 'show']);
-    //recherche
-Route::get('/recherche/live', [ArticleController::class, 'liveSearch'])->name('article.liveSearch');
+    //barre de recherche
+Route::get('/search', [ArticleController::class, 'search']);
 
 
 

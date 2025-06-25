@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import { Link, usePage, router } from "@inertiajs/react";
 
 interface LayoutProps {
@@ -19,9 +20,45 @@ interface LayoutProps {
 //     };
 // }
 
+
 export default function Layout({children}: LayoutProps) {
     // const { flash, auth } = usePage<PageProps>().props;
     const { auth } = usePage().props
+
+    const [searchQuery, setSearchQuery] = useState("");
+    const [results, setResults] = useState<{ articles: any[], tags: any[], categories: any[] }>({ articles: [], tags: [], categories: [] });
+    const [showModal, setShowModal] = useState(false);
+    const searchRef = useRef<HTMLDivElement>(null);
+
+    // Requête automatique au changement du texte
+    useEffect(() => {
+        if (searchQuery.length > 1) {
+            axios.get(`/search?q=${searchQuery}`)
+                .then((res) => {
+                    setResults(res.data);
+                    setShowModal(true);
+                })
+                .catch(() => {
+                    setResults({ articles: [], tags: [], categories: [] });
+                    setShowModal(false);
+                });
+        } else {
+            setShowModal(false);
+        }
+    }, [searchQuery]);
+
+    // Fermer la recherche si clic en dehors
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
+                setShowModal(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+
 
     const deco = () => { //Deconnexion 
         router.post('/logout')
@@ -60,37 +97,56 @@ export default function Layout({children}: LayoutProps) {
                                 </Link>
                         </div>
 
-                        {/* Formulaire de recherche */}
 
-                    <div className="relative ms-4">
-                        <form onSubmit={''}>
+                      {/* Barre de recherche */}
+                        <div className="relative" ref={searchRef}>
                             <input
-                                // type="text"
-                                // value={searchTerm}
-                                // onChange={(e) => setSearchTerm(e.target.value)}
-                                placeholder="Rechercher un article..."
-                                className="border border-gray-400 rounded px-3 py-1 text-sm bg-white text-black"
-                                // onFocus={() => setShowResults(true)}
-                                // onBlur={() => setTimeout(() => setShowResults(false), 200)}
+                                type="text"
+                                name="search"
+                                placeholder="Recherche..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="border border-gray-400 rounded px-3 py-1 text-sm focus:bg-white focus:text-black"
                             />
-                        </form>
-                    </div>
 
-                        {/* Fenêtre de résultats */}
-                        {/* {showResults && results.length > 0 && (
-                            <div className="absolute top-full mt-2 left-0 bg-white text-black w-64 max-h-60 overflow-y-auto rounded shadow-lg z-50">
-                                {results.map((article) => (
-                                    <Link
-                                        key={article.id}
-                                        href={`/detail/article/${article.id}`}
-                                        className="block px-4 py-2 hover:bg-gray-100 border-b border-gray-200"
-                                    >
-                                        {article.title}
-                                    </Link>
-                                ))}
-                            </div>
-                        )}
-                    </div> */}
+                            {showModal && (
+                                <div className="absolute top-10 right-0 z-50 bg-white text-black w-80 max-h-96 overflow-y-auto shadow-lg rounded p-4">
+                                
+                                    <h4 className="text-sm font-bold mb-1 text-gray-600">Articles</h4>
+                                    {results.articles.length > 0 ? (
+                                        results.articles.map((a) => (
+                                            <Link key={a.id} href={`/detail/article/${a.id}`} className="block hover:bg-gray-200 p-1 rounded">
+                                                {a.title}
+                                            </Link>
+                                        ))
+                                    ) : (
+                                        <p className="text-xs text-gray-500">Aucun article trouvé</p>
+                                    )}
+
+                                    <h4 className="text-sm font-bold mt-4 mb-1 text-gray-600">Tags</h4>
+                                    {results.tags.length > 0 ? (
+                                        results.tags.map((t) => (
+                                            <Link key={t.id} href={`/tags`} className="block hover:bg-gray-200 p-1 rounded">
+                                                {t.name}
+                                            </Link>
+                                        ))
+                                    ) : (
+                                        <p className="text-xs text-gray-500">Aucun tag trouvé</p>
+                                    )}
+
+                                    <h4 className="text-sm font-bold mt-4 mb-1 text-gray-600">Catégories</h4>
+                                    {results.categories.length > 0 ? (
+                                        results.categories.map((c) => (
+                                            <Link key={c.id} href={`/categories`} className="block hover:bg-gray-200 p-1 rounded">
+                                                {c.name}
+                                            </Link>
+                                        ))
+                                    ) : (
+                                        <p className="text-xs text-gray-500">Aucune catégorie trouvée</p>
+                                    )}
+                                </div>
+                            )}
+                        </div>
 
                         {auth.user ? (
                             <div className="me-3 flex gap-4">

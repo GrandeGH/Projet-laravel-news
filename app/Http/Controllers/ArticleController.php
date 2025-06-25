@@ -32,17 +32,19 @@ class ArticleController extends Controller
     }
 
     // formulaire de recherche
-    public function liveSearch(Request $request)
+    public function search(Request $request)
     {
-        $search = $request->input('search');
+        $query = $request->input('q');
 
-        $articles = Article::select('id', 'title') // on récupère seulement ce qu'on va afficher
-            ->where('title', 'like', '%' . $search . '%')
-            ->orderByDesc('created_at')
-            ->limit(10)
-            ->get();
+        $articles = Article::where('title', 'like', "%{$query}%")->get();
+        $tags = Tag::where('name', 'like', "%{$query}%")->get();
+        $categories = Categorie::where('name', 'like', "%{$query}%")->get();
 
-        return response()->json($articles);
+        return response()->json([
+            'articles' => $articles,
+            'tags' => $tags,
+            'categories' => $categories,
+        ]);
     }
 
     /**
