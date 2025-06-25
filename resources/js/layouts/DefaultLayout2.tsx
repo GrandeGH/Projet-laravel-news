@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, usePage, router } from "@inertiajs/react";
 
 interface LayoutProps {
@@ -23,42 +23,15 @@ export default function Layout({children}: LayoutProps) {
     // const { flash, auth } = usePage<PageProps>().props;
     const { auth } = usePage().props
 
-    const deco = () => {
+    const deco = () => { //Deconnexion 
         router.post('/logout')
     }
+
 
     return(
         <>
         {/* Image de fond */}
-        <div
-            //     style={{
-            //         position: "absolute",
-            //         top: 0,
-            //         left: 0,
-            //         width: "100%",
-            //         // height: "100%",
-            //         minHeight:"100%",
-            //         backgroundImage: "url('/images/Bg_Tales_of_Arise.png')",
-            //         backgroundAttachment: "fixed",
-            //         backgroundSize: "cover",
-            //         backgroundPosition: "center",
-            //         zIndex: 100,
-            //     }}
-            // >
-
-            // {/* Overlay noir semi-transparent */}
-            // <div
-            //     style={{
-            //         position: "absolute",
-            //         top: 0,
-            //         left: 0,
-            //         width: "100%",
-            //         minHeight: "100%",
-            //         backgroundColor: "rgba(0, 0, 0, 0.7)",
-            //         zIndex: -1,
-            //     }}
-            >
-            {/* <div className="absolute inset-0 bg-black/50 z-0"></div> */}
+        <div>
             <div className="z-10 relative">
                 <header className="bg-orange-950 text-orange-300 p-5 fixed top-0 w-screen shadow-2xl z-50">
                     <div className="flex justify-between">
@@ -88,20 +61,36 @@ export default function Layout({children}: LayoutProps) {
                         </div>
 
                         {/* Formulaire de recherche */}
-                        <form
-                            onSubmit={(e) => {
-                                e.preventDefault();
-                                router.get("/articles", { search: e.target.search.value }, { preserveScroll: true });
-                            }}
-                            className="ms-4"
-                        >
+
+                    <div className="relative ms-4">
+                        <form onSubmit={''}>
                             <input
-                                type="text"
-                                name="search"
-                                placeholder="Rechercher..."
-                                className="border border-gray-400 rounded px-3 py-1 text-sm"
+                                // type="text"
+                                // value={searchTerm}
+                                // onChange={(e) => setSearchTerm(e.target.value)}
+                                placeholder="Rechercher un article..."
+                                className="border border-gray-400 rounded px-3 py-1 text-sm bg-white text-black"
+                                // onFocus={() => setShowResults(true)}
+                                // onBlur={() => setTimeout(() => setShowResults(false), 200)}
                             />
                         </form>
+                    </div>
+
+                        {/* Fenêtre de résultats */}
+                        {/* {showResults && results.length > 0 && (
+                            <div className="absolute top-full mt-2 left-0 bg-white text-black w-64 max-h-60 overflow-y-auto rounded shadow-lg z-50">
+                                {results.map((article) => (
+                                    <Link
+                                        key={article.id}
+                                        href={`/detail/article/${article.id}`}
+                                        className="block px-4 py-2 hover:bg-gray-100 border-b border-gray-200"
+                                    >
+                                        {article.title}
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
+                    </div> */}
 
                         {auth.user ? (
                             <div className="me-3 flex gap-4">

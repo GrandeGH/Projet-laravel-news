@@ -20,6 +20,7 @@ class ArticleController extends Controller
      */
     public function index(Request $request)
     {
+
         $articles = Article::with('categorie', 'tags', 'user')
             ->orderBy('created_at', 'desc')        
             ->get();
@@ -28,6 +29,20 @@ class ArticleController extends Controller
             'articles' => $articles,
         ]);
 
+    }
+
+    // formulaire de recherche
+    public function liveSearch(Request $request)
+    {
+        $search = $request->input('search');
+
+        $articles = Article::select('id', 'title') // on récupère seulement ce qu'on va afficher
+            ->where('title', 'like', '%' . $search . '%')
+            ->orderByDesc('created_at')
+            ->limit(10)
+            ->get();
+
+        return response()->json($articles);
     }
 
     /**

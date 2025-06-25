@@ -30,6 +30,9 @@ Route::get('/detail/categorie/{id}', [CategorieController::class, 'show']);
     //tags
 Route::get('tags', [TagController::class, 'index']);
 Route::get('/detail/tag/{id}', [TagController::class, 'show']);
+    //recherche
+Route::get('/recherche/live', [ArticleController::class, 'liveSearch'])->name('article.liveSearch');
+
 
 
 //articles pour roles
