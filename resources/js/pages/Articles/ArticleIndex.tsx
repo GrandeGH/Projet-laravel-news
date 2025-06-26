@@ -20,15 +20,14 @@ export default function ArticleIndex({articles}) {
                 ) : (
                     " "
                 )}
-            <div className="p-6 max-w-7xl mx-auto ">
+            <div className=" max-w-7xl mx-auto">
                 <h1 className="text-5xl font-bold mb-8 text-center">Nos articles</h1>
-
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                     {articles.length === 0 ? (
                         <p className="text-center text-gray-300 text-lg">Aucun article disponible</p>
                     ) : (
                         articles.map((article) => (
-                            <div className="border border-white sm:m-0 lg:m-3 p-3 flex flex-col justify-between bg-white/10 group">
+                            <div className="border border-white sm:m-0 lg:m-3 p-3 flex flex-col justify-between bg-white/20 group">
                                 {/* image */}           
                                 <div className="aspect-video border border-white overflow-hidden">
                                     {article.image && (
@@ -44,7 +43,7 @@ export default function ArticleIndex({articles}) {
                                 </Link> 
                                 {/* pied de la carte */}
                                 <div className="mt-auto flex justify-between items-end pt-1">    
-                                     <div className="space-x-2">
+                                    <div className="space-x-2">
                                         <Link href={`/detail/article/${article.id}`}>
                                             <button className="border border-white py-1  px-3 cursor-pointer hover:bg-amber-500">
                                                 Voir l'article

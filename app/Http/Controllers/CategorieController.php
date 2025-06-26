@@ -67,7 +67,7 @@ class CategorieController extends Controller
     public function edit($id)
     {
         $categorie = Categorie::find($id);
-        return Inertia::render('Admin/CategoriesAdmin/CategoriesEdit');
+        return Inertia::render('Admin/CategoriesAdmin/CategoriesEdit', ['categorie' =>$categorie]);
     }
 
     /**

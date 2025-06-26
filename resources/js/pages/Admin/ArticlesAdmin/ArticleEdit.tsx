@@ -91,6 +91,7 @@ export default function ArticleEdit( {article, categories, tags} ) {
                         onChange={(e) => setValues({ ...values, image: e.target.files[0] })}
                     />
                     
+                    {/* choix catégorie */}
                     <label htmlFor="categorie_id">Catégorie</label>
                     <select
                     name="categorie_id"
@@ -98,15 +99,16 @@ export default function ArticleEdit( {article, categories, tags} ) {
                     value={values.categorie_id}
                     onChange={(e) => setValues({ ...values, categorie_id: e.target.value })}
                     >
-                    <option value="">Choisir une catégorie</option>
-                    {categories.map((categorie) => (
-                        <option key={categorie.id} value={categorie.id}>
-                        {categorie.name}
-                        </option>
+                        <option value="" className="text-black font-semibold">Choisir une catégorie</option>
+                        {categories.map((categorie) => (
+                            <option key={categorie.id} value={categorie.id}
+                            className="text-black">
+                            {categorie.name}
+                            </option>
                     ))}
                     </select>
                     
-
+                    {/* choix tags  */}
                     <div className="mb-3">
                         <label className="">Tags</label>
                         <div className="flex flex-wrap gap-2.5 mt-3">
